@@ -1,0 +1,21 @@
+.pieChartContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.pieChartContainer .recharts-default-tooltip {
+    position: absolute;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 0.5rem;
+    z-index: 1;
+}
+
+.pieChartContainer .recharts-legend-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 1rem;
+}

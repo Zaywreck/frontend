@@ -1,0 +1,34 @@
+.dashboard-container {
+    padding: 20px;
+    text-align: center;
+    min-height: 100vh;
+    background-color: #efeff0;
+}
+
+.title {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: black;
+}
+
+.buttonGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    justify-content: center;
+}
+
+.button {
+    display: block;
+    padding: 20px;
+    background-color: #4B49AC;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+.button:hover {
+    background-color: #005bb5;
+}

@@ -1,0 +1,86 @@
+/* Header.css */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #1f2937; /* Dark Gray Background */
+  color: white;
+  padding: 1rem;
+}
+
+.logoArea {
+  flex: 1;
+}
+
+.logo {
+  width: auto;
+  height: auto;
+}
+
+.titleArea {
+  flex: 2;
+  text-align: center;
+}
+
+.title {
+  font-size: 1.5rem;
+  margin: 0;
+  color: #ffffff; /* Explicitly set the color to white */
+}
+
+.linkArea {
+  flex: 1;
+  text-align: right;
+}
+
+.nav {
+  display: flex;
+  gap: 1rem;
+}
+
+.link {
+  font-size: 1.125rem; /* Large Text */
+  font-weight: 600; /* Semi-Bold Text */
+  color: white;
+  text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.link:hover {
+  color: #9ca3af; /* Light Gray on Hover */
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-toggle::after {
+  content: ' ▼';
+  font-size: 0.75em;
+}
+
+.dropdown-menu {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #1f2937;
+  padding: 1rem;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.dropdown-item {
+  color: white;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+}
+
+.dropdown-item:hover {
+  background-color: #4b5563; /* Slightly lighter dark gray */
+  color: #9ca3af; /* Light Gray on Hover */
+}

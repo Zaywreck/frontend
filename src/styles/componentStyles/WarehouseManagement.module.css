@@ -1,0 +1,55 @@
+.container {
+    padding: 20px;
+    background-color: #f9f9f9;
+}
+
+.title {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.loading {
+    color: #0070f3;
+}
+
+.formContainer {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.input {
+    display: block;
+    width: calc(100% - 20px);
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    background-color: #007bff;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.button:hover {
+    background-color: #0056b3;
+}
+
+.editContainer {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    bottom: 0;
+    z-index: 1000;
+}

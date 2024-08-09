@@ -1,0 +1,22 @@
+/* Home.css */
+.main {
+  padding: 2rem;
+  text-align: center;
+}
+
+.title {
+  font-size: 4rem;
+  color: #1f2937; /* Dark Gray */
+}
+
+.description {
+  font-size: 1.5rem;
+  color: #4b5563; /* Gray */
+}
+
+.footer {
+  padding: 1rem;
+  text-align: center;
+  background-color: #1f2937; /* Dark Gray */
+  color: white;
+}
