@@ -12,8 +12,8 @@ const AdminDashboard = () => {
                 <Link href="/admin/product" className="button">
                     Manage Products
                 </Link>
-                <Link href="/admin/orders" className="button">
-                    Manage Orders
+                <Link href="/admin/city" className="button">
+                    Manage Cities
                 </Link>
                 <Link href="/admin/customers" className="button">
                     Manage Customers

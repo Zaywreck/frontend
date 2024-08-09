@@ -1,42 +1,54 @@
+'use client'
 import React, { useContext, useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import AppContext from '@/context/AppContext';
+import styles from '@/styles/componentStyles/EditPage.module.css';
 
-const EditProductPage = () => {
+const EditProductPage = ({ params }) => {
     const router = useRouter();
-    const { productCode } = router.query;
+    const productCode = params.code;
     const { fetchProduct, updateProduct } = useContext(AppContext);
     const [product, setProduct] = useState(null);
-    const [productName, setProductName] = useState('');
 
     useEffect(() => {
         if (productCode) {
             fetchProduct(productCode).then(data => {
                 setProduct(data);
-                setProductName(data.product_name);
             });
         }
     }, [productCode, fetchProduct]);
 
     const handleSave = async () => {
-        await updateProduct({ product_code: productCode, product_name: productName });
-        router.push('/product-management');
+        if (!product) return;
+        try {
+            await updateProduct(product);
+            router.push('/admin/product');
+        } catch (error) {
+            console.error('Error updating product:', error);
+        }
     };
 
     if (!product) return <div>Loading...</div>;
 
     return (
-        <div>
-            <h1>Edit Product</h1>
-            <label>
-                Product Name:
-                <input 
-                    type="text" 
-                    value={productName} 
-                    onChange={(e) => setProductName(e.target.value)} 
-                />
-            </label>
-            <button onClick={handleSave}>Save</button>
+        <div className={styles.container}>
+            <h1 className={styles.title}>Edit Product {productCode}</h1>
+            <input
+                type="text"
+                name="product_name"
+                value={product.product_name || ''}
+                onChange={(e) => setProduct({ ...product, product_name: e.target.value })}
+                className={styles.input}
+            />
+            <input
+                type="text"
+                name="unit_price"
+                value={product.unit_price || ''}
+                onChange={(e) => setProduct({ ...product, unit_price: e.target.value })}
+                className={styles.input}
+            />
+            <button onClick={handleSave} className={styles.button}>Save</button>
+            <button onClick={() => router.back()} className={styles.button}>Cancel</button>
         </div>
     );
 };

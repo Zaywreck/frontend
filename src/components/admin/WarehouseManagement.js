@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import AppContext from '@/context/AppContext';
 import Table from '../utils/Table';
 import styles from '@/styles/componentStyles/WarehouseManagement.module.css';
+import WarehouseAdd from './utils/WarehouseAdd';
 
 const WarehouseManagement = () => {
     const router = useRouter();
@@ -16,6 +17,10 @@ const WarehouseManagement = () => {
 
     const handleAddWarehouse = async () => {
         if (loading) return;
+        if (!newWarehouse.warehouse_code || !newWarehouse.warehouse_name || !newWarehouse.city_code) {
+            alert('Please fill out all fields');
+            return;
+        }
         try {
             await addWarehouse(newWarehouse);
             await fetchWarehouseData();
@@ -57,33 +62,7 @@ const WarehouseManagement = () => {
         <div className={styles.container}>
             <h2 className={styles.title}>Warehouse Management</h2>
             {loading && <p className={styles.loading}>Loading...</p>}
-            <div className={styles.formContainer}>
-                <input
-                    type="text"
-                    placeholder="Warehouse Code"
-                    value={newWarehouse.warehouse_code}
-                    onChange={(e) => setNewWarehouse({ ...newWarehouse, warehouse_code: e.target.value })}
-                    disabled={loading}
-                    className={styles.input}
-                />
-                <input
-                    type="text"
-                    placeholder="Warehouse Name"
-                    value={newWarehouse.warehouse_name}
-                    onChange={(e) => setNewWarehouse({ ...newWarehouse, warehouse_name: e.target.value })}
-                    disabled={loading}
-                    className={styles.input}
-                />
-                <input
-                    type="text"
-                    placeholder="City Code"
-                    value={newWarehouse.city_code}
-                    onChange={(e) => setNewWarehouse({ ...newWarehouse, city_code: e.target.value })}
-                    disabled={loading}
-                    className={styles.input}
-                />
-                <button onClick={handleAddWarehouse} disabled={loading} className={styles.button}>Add Warehouse</button>
-            </div>
+            <WarehouseAdd newWarehouse={newWarehouse} setNewWarehouse={setNewWarehouse} handleAddWarehouse={handleAddWarehouse} loading={loading} />
             <Table columns={columns} data={warehouses} actions={actions} />
         </div>
     );

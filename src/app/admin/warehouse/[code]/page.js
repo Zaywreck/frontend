@@ -5,8 +5,8 @@ import AppContext from '@/context/AppContext';
 import styles from '@/styles/componentStyles/EditPage.module.css';
 
 export default function EditWarehousePage({ params }) {
-    const code = params.code;
     const router = useRouter();
+    const code = params.code;
     const { fetchWarehouse, updateWarehouse, loading } = useContext(AppContext);
     const [warehouse, setWarehouse] = useState(null);
 
