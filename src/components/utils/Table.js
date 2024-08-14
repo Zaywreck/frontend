@@ -1,40 +1,95 @@
-import React from 'react';
+import React, { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import '@/styles/componentStyles/Table.css';
+
 const Table = ({ columns, data, actions }) => {
+    const [searchQuery, setSearchQuery] = useState('');
+    const [sortConfig, setSortConfig] = useState({ key: null, direction: 'asc' });
+
+    const handleSort = (key) => {
+        let direction = 'asc';
+        if (sortConfig.key === key && sortConfig.direction === 'asc') {
+            direction = 'desc';
+        }
+        setSortConfig({ key, direction });
+    };
+
+    // Memoize the filtered and sorted data to avoid recalculating on every render
+    const sortedAndFilteredData = useMemo(() => {
+        let filteredData = data;
+        
+        if (searchQuery) {
+            filteredData = filteredData.filter(row =>
+                columns.some(col =>
+                    String(row[col]).toLowerCase().includes(searchQuery.toLowerCase())
+                )
+            );
+        }
+
+        if (sortConfig.key) {
+            filteredData.sort((a, b) => {
+                if (a[sortConfig.key] < b[sortConfig.key]) {
+                    return sortConfig.direction === 'asc' ? -1 : 1;
+                }
+                if (a[sortConfig.key] > b[sortConfig.key]) {
+                    return sortConfig.direction === 'asc' ? 1 : -1;
+                }
+                return 0;
+            });
+        }
+
+        return filteredData;
+    }, [searchQuery, data, columns, sortConfig]);
+
     return (
-        <table className="generic-table">
-            <thead>
-                <tr>
-                    {columns.map((col, index) => (
-                        <th key={index}>{col}</th>
-                    ))}
-                    {actions.length > 0 && <th>Actions</th>}
-                </tr>
-            </thead>
-            <tbody>
-                {data.map((row, rowIndex) => (
-                    <tr key={rowIndex}>
-                        {columns.map((col, colIndex) => (
-                            <td key={colIndex}>{row[col]}</td>
+        <div className="table-container">
+            <input
+                type="text"
+                placeholder="Search..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="search-bar-table"
+            />
+            <table className="generic-table-table">
+                <thead>
+                    <tr>
+                        {columns.map((col, index) => (
+                            <th key={index} onClick={() => handleSort(col)} className='header-cell-table'>
+                                {col}
+                                {sortConfig.key === col && (
+                                    <span>
+                                        {sortConfig.direction === 'asc' ? ' 🔼' : ' 🔽'}
+                                    </span>
+                                )}
+                            </th>
                         ))}
-                        {actions.length > 0 && (
-                            <td>
-                                {actions.map((action, actionIndex) => (
-                                    <button
-                                        key={actionIndex}
-                                        onClick={() => action.handler(row)}
-                                        className="action-button"
-                                    >
-                                        {action.label}
-                                    </button>
-                                ))}
-                            </td>
-                        )}
+                        {actions.length > 0 && <th>Actions</th>}
                     </tr>
-                ))}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    {sortedAndFilteredData.map((row, rowIndex) => (
+                        <tr key={rowIndex}>
+                            {columns.map((col, colIndex) => (
+                                <td key={colIndex} className='cell-table'>{row[col]}</td>
+                            ))}
+                            {actions.length > 0 && (
+                                <td>
+                                    {actions.map((action, actionIndex) => (
+                                        <button
+                                            key={actionIndex}
+                                            onClick={() => action.handler(row)}
+                                            className="action-button-table"
+                                        >
+                                            {action.label}
+                                        </button>
+                                    ))}
+                                </td>
+                            )}
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </div>
     );
 };
 

@@ -15,11 +15,11 @@ const AdminDashboard = () => {
                 <Link href="/admin/city" className="button">
                     Manage Cities
                 </Link>
-                <Link href="/admin/customers" className="button">
-                    Manage Customers
+                <Link href="/admin/region" className="button">
+                    Manage Regions
                 </Link>
-                <Link href="/admin/reports" className="button">
-                    Manage Reports
+                <Link href="/admin/inventory" className="button">
+                    Manage Inventory
                 </Link>
             </div>
         </div>            

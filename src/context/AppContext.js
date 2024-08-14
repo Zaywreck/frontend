@@ -3,7 +3,10 @@ import React, { createContext, useState, useCallback } from 'react';
 import axios from 'axios';
 import { fetchWarehouse, addWarehouse, updateWarehouse, deleteWarehouse } from '@/services/warehouseService';
 import { fetchProduct, createProduct, deleteProduct, updateProduct } from '@/services/productService';
-import { fetchCity,createCity,deleteCity,updateCity } from '@/services/cityService';
+import { fetchCity, createCity, deleteCity, updateCity } from '@/services/cityService';
+import { fetchRegion, createRegion, deleteRegion, updateRegion } from '@/services/regionService';
+import { addToInventory, deleteFromInventory, updateInInventory, uploadFile, fetchInventoryLine } from '@/services/inventoryService';
+import { constants } from './constants';
 
 const AppContext = createContext();
 
@@ -11,9 +14,12 @@ export const AppProvider = ({ children }) => {
     const [warehouses, setWarehouses] = useState([]);
     const [products, setProducts] = useState([]);
     const [cities, setCities] = useState([]);
+    const [regions, setRegions] = useState([]);
     const [warehouseData, setWarehouseData] = useState({});
+    const [inventory, setInventory] = useState([]);
+    const [totalCount, setTotalCount] = useState(0);
     const [loading, setLoading] = useState(true);
-    const url = 'http://127.0.0.1:8000';
+    const url = constants.url;
 
     const fetchWarehouseData = useCallback(async () => {
         try {
@@ -28,7 +34,7 @@ export const AppProvider = ({ children }) => {
 
     const fetchSingleWarehouseData = useCallback(async (warehouseCode) => {
         try {
-            const response = await axios.get(`${url}/inventory/${warehouseCode}`);
+            const response = await axios.get(`${url}/inventory/warehouse/${warehouseCode}/`);
             setWarehouseData(prev => ({ ...prev, [warehouseCode]: response.data }));
         } catch (error) {
             console.error('Error fetching warehouse data:', error);
@@ -59,6 +65,55 @@ export const AppProvider = ({ children }) => {
         }
     }, [url]);
 
+    const fetchRegions = useCallback(async () => {
+        try {
+            const response = await axios.get(`${url}/regions/`);
+            setRegions(response.data);
+        } catch (error) {
+            console.error('Error fetching regions:', error);
+        } finally {
+            setLoading(false);
+        }
+    }, [url]);
+
+    const fetchAllInventory = useCallback(async (search = '', page = 1, pageSize = 50) => {
+        try {
+            const response = await axios.get(`${url}/inventory/`, {
+                params: {
+                    search: search,
+                    page: page,
+                    page_size: pageSize
+                }
+            });
+            setInventory(response.data.data);
+            setTotalCount(response.data.total_count);
+            return response.data;
+        } catch (error) {
+            console.error('Error fetching inventory:', error);
+            throw error;
+        } finally {
+            setLoading(false);
+        }
+    }, [url]);
+
+    const fetchJoinedWarehouseData = useCallback(async (warehouseCode) => {
+        setLoading(true);
+    
+        try {
+            const response = await axios.get(`${url}/joined/inventory`, {
+                params: { warehouse_code: warehouseCode }
+            });
+            setWarehouseData(prev => ({ ...prev, [warehouseCode]: response.data }));
+            console.log('response.data:', response.data);
+        } catch (error) {
+            console.error('Error fetching joined inventory data:', error);
+        } finally {
+            setLoading(false);
+        }
+    }, [url]);
+    
+
+
     const values = {
         fetchWarehouse,
         createProduct,
@@ -66,9 +121,11 @@ export const AppProvider = ({ children }) => {
         deleteWarehouse,
         warehouses,
         warehouseData,
+        fetchJoinedWarehouseData,
         fetchWarehouseData,
         fetchSingleWarehouseData,
         addWarehouse,
+        uploadFile,
         // -------------
         fetchProduct,
         fetchProducts,
@@ -84,6 +141,24 @@ export const AppProvider = ({ children }) => {
         updateCity,
         cities,
         setCities,
+        // --------------
+        fetchRegions,
+        fetchRegion,
+        regions,
+        setRegions,
+        createRegion,
+        deleteRegion,
+        updateRegion,
+        // --------------
+        fetchAllInventory,
+        addToInventory,
+        deleteFromInventory,
+        updateInInventory,
+        inventory,
+        setInventory,
+        totalCount,
+        setTotalCount,
+        fetchInventoryLine,
         loading
     };
 

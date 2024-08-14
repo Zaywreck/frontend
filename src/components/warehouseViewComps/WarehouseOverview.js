@@ -1,20 +1,19 @@
 import React, { useContext, useEffect, useState } from 'react';
 import AppContext from '@/context/AppContext';
-import '@/styles/componentStyles/WarehouseOverview.css';
+import styles from '@/styles/componentStyles/WarehouseOverview.module.css';
 import WarehouseSelector from './WarehouseSelector';
-import WarehouseData from './WarehouseData';
 import PieChartComponent from '../utils/PieChart';
-
+import Table from '../utils/Table';
 
 const WarehouseOverview = () => {
-    const { warehouseData, fetchSingleWarehouseData, loading } = useContext(AppContext);
+    const { warehouseData, fetchJoinedWarehouseData, loading } = useContext(AppContext);
     const [selectedWarehouse, setSelectedWarehouse] = useState('34YB');
 
     useEffect(() => {
         if (selectedWarehouse) {
-            fetchSingleWarehouseData(selectedWarehouse);
+            fetchJoinedWarehouseData(selectedWarehouse);
         }
-    }, [selectedWarehouse, fetchSingleWarehouseData]);
+    }, [selectedWarehouse, fetchJoinedWarehouseData]);
 
     const handleWarehouseSelect = (warehouseCode) => {
         setSelectedWarehouse(warehouseCode);
@@ -26,18 +25,29 @@ const WarehouseOverview = () => {
 
     const data = warehouseData[selectedWarehouse] || [];
 
+    const columns = [
+        'inventory_code', 
+        'product_name', // Use names instead of codes
+        'warehouse_name', // Use names instead of codes
+        'quantity', 
+        'timestamp'
+    ];
+
     return (
-        <div className="warehouse-overview">
+        <div className={styles.warehouseOverview}>
             <WarehouseSelector onSelect={handleWarehouseSelect} />
             {selectedWarehouse && (
                 <>
                     <h1>Selected Warehouse: {selectedWarehouse}</h1>
-                    <div className="overview-content">
-                        <div className="table-section">
-                            <WarehouseData data={data} />
+                    <div className={styles.overviewContent}>
+                        <div className={styles.tableSection}>
+                            <Table
+                                columns={columns}
+                                data={data}
+                                actions={[]} // No actions defined
+                            />
                         </div>
-                        <div className="chart-section">
-                            {/* <WarehouseChart data={data} /> */}
+                        <div className={styles.chartSection}>
                             <PieChartComponent data={data} />
                         </div>
                     </div>

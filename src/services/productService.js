@@ -1,7 +1,7 @@
-// productService.js
+import { constants } from '@/context/constants';
 import axios from 'axios';
 
-const url = process.env.REACT_APP_API_URL || 'http://127.0.0.1:8000';
+const url = constants.url;
 
 export const fetchProducts = async () => {
     try {

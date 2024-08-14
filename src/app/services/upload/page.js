@@ -3,11 +3,13 @@
 import { useState } from 'react';
 import axios from 'axios';
 import '@/styles/Upload.css'
+import { constants } from '@/context/constants';
 
 export default function Page() {
     const [file, setFile] = useState(null);
     const [message, setMessage] = useState('');
     const [loading, setLoading] = useState(false);
+    const url = constants.url + '/inventory/upload/';
 
     const handleFileChange = (event) => {
         setFile(event.target.files[0]);
@@ -26,19 +28,19 @@ export default function Page() {
         formData.append('file', file);
 
         try {
-            const response = await axios.post('http://127.0.0.1:8000/upload/', formData, {
+            const response = await axios.post(url, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
             });
             setMessage(response.data.message || 'Upload successful');
         } catch (error) {
-            console.error('Error uploading file:', error);
+            console.error('Error uploading file. if the file ending is not ordinal it may caused problem rest of the is uploaded:', error);
             if (error.response) {
-                console.error('Error response:', error.response);
-                setMessage('Error uploading file: ' + error.response.data.detail);
+                console.error('Error response. if the file ending is not ordinal it may caused problem rest of the is uploaded: ', error.response);
+                setMessage('Error uploading file. if the file ending is not ordinal it may caused problem rest of the is uploaded: ' + error.response.data.detail);
             } else {
-                setMessage('Error uploading file: ' + error.message);
+                setMessage('Error uploading file. if the file ending is not ordinal it may caused problem rest of the is uploaded: ' + error.message);
             }
         } finally {
             setLoading(false);

@@ -1,16 +1,16 @@
-.warehouse-overview {
+.warehouseOverview {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.overview-content {
+.overviewContent {
     display: flex;
     width: 100%;
     margin-top: 20px;
 }
 
-.table-section {
+.tableSection {
     flex: 1;
     overflow-y: auto;
     max-height: 500px;
@@ -19,7 +19,7 @@
     border-radius: 8px;
 }
 
-.chart-section {
+.chartSection {
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -27,24 +27,21 @@
     justify-content: space-around;
 }
 
-.bar-chart-container, .pie-chart-container {
+.barChartContainer,
+.pieChartContainer {
     width: 100%;
     max-width: 600px;
     margin-bottom: 20px;
 }
 
-.pie-chart-container {
-    width: 100%;
+.pieChartContainer {
     max-width: 400px;
-}
-
-.pie-chart-container {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.pie-chart-container .recharts-default-tooltip {
+.pieChartContainer .rechartsDefaultTooltip {
     position: absolute;
     background-color: #fff;
     border: 1px solid #ccc;
@@ -53,7 +50,7 @@
     z-index: 1;
 }
 
-.pie-chart-container .recharts-legend-wrapper {
+.pieChartContainer .rechartsLegendWrapper {
     display: flex;
     flex-direction: column;
     align-items: flex-start;

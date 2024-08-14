@@ -1,5 +1,17 @@
 /* Table Styles */
-.generic-table {
+.table-container {
+    position: relative;
+    width: 100%;
+}
+
+.table-container .search-bar-table {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+.table-container .generic-table-table {
     width: 100%;
     border-collapse: collapse;
     margin: 20px 0;
@@ -7,24 +19,30 @@
     min-width: 400px;
 }
 
-.generic-table th, .generic-table td {
+.table-container .generic-table-table th,
+.table-container .generic-table-table td {
     padding: 12px 15px;
     border: 1px solid #ddd;
     text-align: left;
 }
 
-.generic-table th {
+.table-container .generic-table-table th {
     background-color: #f4f4f4;
 }
 
-.generic-table tr:nth-child(even) {
+.table-container .generic-table-table tr:nth-child(even) {
     background-color: #f9f9f9;
 }
 
-.generic-table tr:hover {
+.table-container .generic-table-table tr:nth-child(odd) {
+    background-color: #ffffff;
+}
+
+.table-container .generic-table-table tr:hover {
     background-color: #f1f1f1;
 }
-.action-button {
+
+.table-container .action-button-table {
     margin-right: 5px;
     padding: 5px 10px;
     border: none;
@@ -34,6 +52,21 @@
     cursor: pointer;
 }
 
-.action-button:hover {
+.table-container .action-button-table:hover {
     background-color: #0056b3;
+}
+
+.table-container .header-cell-table {
+    color: #000000;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.table-container .header-cell-table span {
+    font-size: 0.8em;
+    margin-left: 5px;
+}
+
+.table-container .cell-table {
+    color: #000000;
 }
