@@ -2,21 +2,25 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 20px;
 }
 
 .overviewContent {
     display: flex;
+    justify-content: space-between;
     width: 100%;
-    margin-top: 20px;
+    max-width: 100%; 
+    gap: 20px;
+    flex-wrap: wrap;
 }
 
 .tableSection {
     flex: 1;
+    max-height: 600px;
     overflow-y: auto;
-    max-height: 500px;
-    margin-right: 20px;
     border: 1px solid #ccc;
     border-radius: 8px;
+    margin-right: 20px;
 }
 
 .chartSection {
@@ -24,35 +28,44 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-around;
+    justify-content: center;
 }
 
-.barChartContainer,
 .pieChartContainer {
     width: 100%;
     max-width: 600px;
-    margin-bottom: 20px;
+    margin: 0 auto;
 }
 
-.pieChartContainer {
-    max-width: 400px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+@media (max-width: 1024px) {
+    .overviewContent {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .tableSection {
+        max-height: 500px; /* Adjust for medium-sized screens */
+    }
 }
 
-.pieChartContainer .rechartsDefaultTooltip {
-    position: absolute;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    padding: 0.5rem;
-    z-index: 1;
+@media (max-width: 768px) {
+    .overviewContent {
+        flex-direction: column;
+        gap: 15px; /* Reduced gap for smaller screens */
+    }
+
+    .tableSection {
+        max-height: 400px; /* Adjust for smaller screens */
+    }
 }
 
-.pieChartContainer .rechartsLegendWrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    margin-top: 1rem;
+@media (max-width: 480px) {
+    .overviewContent {
+        flex-direction: column;
+        gap: 10px; /* Further reduced gap for extra-small screens */
+    }
+
+    .tableSection {
+        max-height: 300px; /* Adjust for very small screens */
+    }
 }

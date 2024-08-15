@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import styles from '@/styles/componentStyles/Header.module.css';
 import React, { useState, useContext } from 'react';
-import AuthContext from '@/context/AuthContext';  // Ensure correct path to AuthContext
+import AuthContext from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
 
 export default function Header() {
@@ -36,20 +36,23 @@ export default function Header() {
         <nav className={styles.nav}>
           <Link href="/" className={styles.link}>Home</Link>
           <Link href="/about" className={styles.link}>About</Link>
-          <div className={styles.dropdown}>
-            <button className={`${styles.link} ${styles.dropdownToggle}`} onClick={toggleDropdown}>
-              Services
-            </button>
-            {dropdownOpen && (
-              <div className={styles.dropdownMenu}>
-                <Link href="/admin" className={styles.dropdownItem} onClick={handleClick}>Admin Panel</Link>
-                <Link href="/services/upload" className={styles.dropdownItem} onClick={handleClick}>Upload Data</Link>
+          {user && (
+            <>
+              <div className={styles.dropdown}>
+                <button className={`${styles.link} ${styles.dropdownToggle}`} onClick={toggleDropdown}>
+                  Services
+                </button>
+                {dropdownOpen && (
+                  <div className={styles.dropdownMenu}>
+                    <Link href="/admin" className={styles.dropdownItem} onClick={handleClick}>Admin Panel</Link>
+                    <Link href="/services/upload" className={styles.dropdownItem} onClick={handleClick}>Upload Data</Link>
+                  </div>
+                )}
               </div>
-            )}
-          </div>
-          {user ? (
-            <button className={styles.link} onClick={handleLogout}>Sign Out</button>
-          ) : (
+              <button className={styles.link} onClick={handleLogout}>Sign Out</button>
+            </>
+          )}
+          {!user && (
             <Link href="/auth" className={styles.link}>Sign In</Link>
           )}
         </nav>

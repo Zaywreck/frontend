@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import AppContext from '@/context/AppContext';
 import styles from '@/styles/componentStyles/WarehouseOverview.module.css';
 import WarehouseSelector from './WarehouseSelector';
@@ -24,11 +24,10 @@ const WarehouseOverview = () => {
     }
 
     const data = warehouseData[selectedWarehouse] || [];
-
     const columns = [
         'inventory_code', 
-        'product_name', // Use names instead of codes
-        'warehouse_name', // Use names instead of codes
+        'product_name',
+        'warehouse_name',
         'quantity', 
         'timestamp'
     ];
@@ -44,7 +43,7 @@ const WarehouseOverview = () => {
                             <Table
                                 columns={columns}
                                 data={data}
-                                actions={[]} // No actions defined
+                                actions={[]}
                             />
                         </div>
                         <div className={styles.chartSection}>

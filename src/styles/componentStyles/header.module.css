@@ -5,6 +5,7 @@
   background-color: #1f2937;
   color: white;
   padding: 1rem;
+  position: relative;
 }
 
 .logoArea {
@@ -24,7 +25,7 @@
 .title {
   font-size: 1.5rem;
   margin: 0;
-  color: #ffffff; /* Explicitly set the color to white */
+  color: #ffffff;
 }
 
 .linkArea {
@@ -38,8 +39,8 @@
 }
 
 .link {
-  font-size: 1.125rem; /* Large Text */
-  font-weight: 600; /* Semi-Bold Text */
+  font-size: 1.125rem;
+  font-weight: 600;
   color: white;
   text-decoration: none;
   background: none;
@@ -48,7 +49,7 @@
 }
 
 .link:hover {
-  color: #9ca3af; /* Light Gray on Hover */
+  color: #9ca3af;
 }
 
 .dropdown {
@@ -80,6 +81,41 @@
 }
 
 .dropdownItem:hover {
-  background-color: #4b5563; /* Slightly lighter dark gray */
-  color: #9ca3af; /* Light Gray on Hover */
+  background-color: #4b5563;
+  color: #9ca3af;
+}
+
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .linkArea {
+    margin-top: 1rem;
+  }
+
+  .nav {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .dropdownMenu {
+    right: auto;
+    left: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .title {
+    font-size: 1.25rem;
+  }
+
+  .link {
+    font-size: 1rem;
+  }
+
+  .dropdownMenu {
+    width: 100%;
+  }
 }

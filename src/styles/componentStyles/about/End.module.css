@@ -1,0 +1,29 @@
+.endContainer {
+    padding: 2rem;
+    max-width: 800px;
+    margin: 0 auto;
+    margin-top: 5px;
+    background-color: #f4f4f4;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.endTextContainer {
+    margin-bottom: 1.5rem;
+}
+
+.endText {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #333;
+    margin-bottom: 1rem;
+}
+
+.link {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.link:hover {
+    text-decoration: underline;
+}

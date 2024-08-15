@@ -2,9 +2,12 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
 }
 
-.pieChartContainer .recharts-default-tooltip {
+.recharts-default-tooltip {
     position: absolute;
     background-color: #fff;
     border: 1px solid #ccc;
@@ -13,9 +16,16 @@
     z-index: 1;
 }
 
-.pieChartContainer .recharts-legend-wrapper {
+.recharts-legend-wrapper {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     margin-top: 1rem;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .pieChartContainer {
+        max-width: 400px; /* Adjusted for smaller screens */
+    }
 }

@@ -1,3 +1,4 @@
+/* styles/componentStyles/Table.module.css */
 .tableContainer {
     position: relative;
     width: 100%;
@@ -13,14 +14,14 @@
 .genericTableTable {
     width: 100%;
     border-collapse: collapse;
-    margin: 20px 0;
-    font-size: 18px;
-    min-width: 400px;
+    margin: 0; /* Remove margin */
+    font-size: 16px; /* Reduce font size if needed */
+    min-width: 300px; /* Adjust min-width */
 }
 
 .genericTableTable th,
 .genericTableTable td {
-    padding: 12px 15px;
+    padding: 8px 10px; /* Reduce padding */
     border: 1px solid #ddd;
     text-align: left;
 }
@@ -43,7 +44,7 @@
 
 .actionButtonTable {
     margin-right: 5px;
-    padding: 5px 10px;
+    padding: 5px 8px; /* Reduce padding */
     border: none;
     border-radius: 4px;
     color: #fff;
