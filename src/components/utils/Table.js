@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import '@/styles/componentStyles/Table.css';
+import styles from '@/styles/componentStyles/Table.module.css';
 
 const Table = ({ columns, data, actions }) => {
     const [searchQuery, setSearchQuery] = useState('');
@@ -42,19 +42,23 @@ const Table = ({ columns, data, actions }) => {
     }, [searchQuery, data, columns, sortConfig]);
 
     return (
-        <div className="table-container">
+        <div className={styles.tableContainer}>
             <input
                 type="text"
                 placeholder="Search..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="search-bar-table"
+                className={styles.searchBarTable}
             />
-            <table className="generic-table-table">
+            <table className={styles.genericTableTable}>
                 <thead>
                     <tr>
                         {columns.map((col, index) => (
-                            <th key={index} onClick={() => handleSort(col)} className='header-cell-table'>
+                            <th
+                                key={index}
+                                onClick={() => handleSort(col)}
+                                className={styles.headerCellTable}
+                            >
                                 {col}
                                 {sortConfig.key === col && (
                                     <span>
@@ -70,7 +74,9 @@ const Table = ({ columns, data, actions }) => {
                     {sortedAndFilteredData.map((row, rowIndex) => (
                         <tr key={rowIndex}>
                             {columns.map((col, colIndex) => (
-                                <td key={colIndex} className='cell-table'>{row[col]}</td>
+                                <td key={colIndex} className={styles.cellTable}>
+                                    {row[col]}
+                                </td>
                             ))}
                             {actions.length > 0 && (
                                 <td>
@@ -78,7 +84,7 @@ const Table = ({ columns, data, actions }) => {
                                         <button
                                             key={actionIndex}
                                             onClick={() => action.handler(row)}
-                                            className="action-button-table"
+                                            className={styles.actionButtonTable}
                                         >
                                             {action.label}
                                         </button>

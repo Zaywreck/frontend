@@ -2,7 +2,7 @@
 // src/app/services/upload/page.js
 import { useState } from 'react';
 import axios from 'axios';
-import '@/styles/Upload.css'
+import styles from '@/styles/upload.module.css'
 import { constants } from '@/context/constants';
 
 export default function Page() {
@@ -48,7 +48,7 @@ export default function Page() {
     };
 
     return (
-        <div className='upload-container'>
+        <div className={styles.uploadContainer}>
             <div>
                 <h1>Upload a File</h1>
                 <form onSubmit={handleSubmit}>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { PieChart, Pie, Cell, Tooltip, Legend } from 'recharts';
-import '@/styles/componentStyles/PieChart.css';
+import styles from '@/styles/componentStyles/PieChart.module.css';
+
 const PieChartComponent = ({ data, limit = 10 }) => {
     const chartData = data
         .sort((a, b) => b.quantity - a.quantity)
@@ -11,7 +12,7 @@ const PieChartComponent = ({ data, limit = 10 }) => {
         }));
 
     return (
-        <div className="pie-chart-container">
+        <div className={styles.pieChartContainer}>
             <PieChart width={600} height={600}>
                 <Pie
                     data={chartData}

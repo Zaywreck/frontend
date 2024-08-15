@@ -1,17 +1,16 @@
-/* Table Styles */
-.table-container {
+.tableContainer {
     position: relative;
     width: 100%;
 }
 
-.table-container .search-bar-table {
+.searchBarTable {
     width: 100%;
     padding: 8px;
     margin-bottom: 10px;
     box-sizing: border-box;
 }
 
-.table-container .generic-table-table {
+.genericTableTable {
     width: 100%;
     border-collapse: collapse;
     margin: 20px 0;
@@ -19,30 +18,30 @@
     min-width: 400px;
 }
 
-.table-container .generic-table-table th,
-.table-container .generic-table-table td {
+.genericTableTable th,
+.genericTableTable td {
     padding: 12px 15px;
     border: 1px solid #ddd;
     text-align: left;
 }
 
-.table-container .generic-table-table th {
+.genericTableTable th {
     background-color: #f4f4f4;
 }
 
-.table-container .generic-table-table tr:nth-child(even) {
+.genericTableTable tr:nth-child(even) {
     background-color: #f9f9f9;
 }
 
-.table-container .generic-table-table tr:nth-child(odd) {
+.genericTableTable tr:nth-child(odd) {
     background-color: #ffffff;
 }
 
-.table-container .generic-table-table tr:hover {
+.genericTableTable tr:hover {
     background-color: #f1f1f1;
 }
 
-.table-container .action-button-table {
+.actionButtonTable {
     margin-right: 5px;
     padding: 5px 10px;
     border: none;
@@ -52,21 +51,21 @@
     cursor: pointer;
 }
 
-.table-container .action-button-table:hover {
+.actionButtonTable:hover {
     background-color: #0056b3;
 }
 
-.table-container .header-cell-table {
+.headerCellTable {
     color: #000000;
     font-weight: bold;
     cursor: pointer;
 }
 
-.table-container .header-cell-table span {
+.headerCellTable span {
     font-size: 0.8em;
     margin-left: 5px;
 }
 
-.table-container .cell-table {
+.cellTable {
     color: #000000;
 }

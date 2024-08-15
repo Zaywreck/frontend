@@ -35,7 +35,7 @@ const WarehouseOverview = () => {
 
     return (
         <div className={styles.warehouseOverview}>
-            <WarehouseSelector onSelect={handleWarehouseSelect} />
+            <WarehouseSelector onSelect={handleWarehouseSelect} selectedWarehouse={selectedWarehouse} />
             {selectedWarehouse && (
                 <>
                     <h1>Selected Warehouse: {selectedWarehouse}</h1>

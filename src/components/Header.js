@@ -1,8 +1,7 @@
 'use client'
-// src/components/Header.js
 import Link from 'next/link';
 import Image from 'next/image';
-import '@/styles/componentStyles/Header.css';
+import styles from '@/styles/componentStyles/Header.module.css';
 import React, { useState, useContext } from 'react';
 import AuthContext from '@/context/AuthContext';  // Ensure correct path to AuthContext
 import { useRouter } from 'next/navigation';
@@ -26,32 +25,32 @@ export default function Header() {
   };
 
   return (
-    <header className="header">
-      <div className="logoArea">
-        <Image src="/assets/logo.png" alt="logo" className="logo" width={50} height={50} />
+    <header className={styles.header}>
+      <div className={styles.logoArea}>
+        <Image src="/assets/logo.png" alt="logo" className={styles.logo} width={50} height={50} />
       </div>
-      <div className="titleArea">
-        <h1>Inventory Management System</h1>
+      <div className={styles.titleArea}>
+        <h1 className={styles.title}>Inventory Management System</h1>
       </div>
-      <div className="linkArea">
-        <nav className="nav">
-          <Link href="/" className="link">Home</Link>
-          <Link href="/about" className="link">About</Link>
-          <div className="dropdown">
-            <button className="link dropdown-toggle" onClick={toggleDropdown}>
+      <div className={styles.linkArea}>
+        <nav className={styles.nav}>
+          <Link href="/" className={styles.link}>Home</Link>
+          <Link href="/about" className={styles.link}>About</Link>
+          <div className={styles.dropdown}>
+            <button className={`${styles.link} ${styles.dropdownToggle}`} onClick={toggleDropdown}>
               Services
             </button>
             {dropdownOpen && (
-              <div className="dropdown-menu">
-                <Link href="/admin" className="dropdown-item" onClick={handleClick}>Admin Panel</Link>
-                <Link href="/services/upload" className="dropdown-item" onClick={handleClick}>Upload Data</Link>
+              <div className={styles.dropdownMenu}>
+                <Link href="/admin" className={styles.dropdownItem} onClick={handleClick}>Admin Panel</Link>
+                <Link href="/services/upload" className={styles.dropdownItem} onClick={handleClick}>Upload Data</Link>
               </div>
             )}
           </div>
           {user ? (
-            <button className="link" onClick={handleLogout}>Sign Out</button>
+            <button className={styles.link} onClick={handleLogout}>Sign Out</button>
           ) : (
-            <Link href="/auth" className="link">Sign In</Link>
+            <Link href="/auth" className={styles.link}>Sign In</Link>
           )}
         </nav>
       </div>
