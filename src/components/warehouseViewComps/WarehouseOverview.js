@@ -12,6 +12,7 @@ const WarehouseOverview = () => {
     useEffect(() => {
         if (selectedWarehouse) {
             fetchJoinedWarehouseData(selectedWarehouse);
+            console.log(warehouseData);
         }
     }, [selectedWarehouse, fetchJoinedWarehouseData]);
 
@@ -24,11 +25,13 @@ const WarehouseOverview = () => {
     }
 
     const data = warehouseData[selectedWarehouse] || [];
+    console.log(data);
     const columns = [
         'inventory_code', 
         'product_name',
         'warehouse_name',
-        'quantity', 
+        'quantity',
+        'average_consumption', 
         'timestamp'
     ];
 

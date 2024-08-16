@@ -1,0 +1,39 @@
+/* MapComponent.module.css */
+
+.container {
+  display: flex;
+}
+
+.mapContainer {
+  flex: 2;
+  height: 80vh;
+  margin: 10px;
+  border: 2px solid #471d1d;
+  border-style: groove;
+  border-radius: 5px;
+}
+
+.map {
+  height: 100%;
+  width: 100%;
+}
+
+.listContainer {
+  flex: 1;
+  padding: 10px;
+  overflow-y: auto;
+}
+
+.listContainer h2 {
+  margin-top: 0;
+}
+
+.warehouseItem {
+  cursor: pointer;
+  padding: 5px;
+  border-bottom: 1px solid #ccc;
+}
+
+.warehouseItem:hover {
+  background-color: #f0f0f0;
+}

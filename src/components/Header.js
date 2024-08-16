@@ -27,7 +27,9 @@ export default function Header() {
   return (
     <header className={styles.header}>
       <div className={styles.logoArea}>
-        <Image src="/assets/logo.png" alt="logo" className={styles.logo} width={50} height={50} />
+        <a href="/"><span className={styles.visuallyHidden}>Home</span>
+          <Image src="/assets/logo.png" alt="logo" className={styles.logo} width={50} height={50} />
+        </a>
       </div>
       <div className={styles.titleArea}>
         <h1 className={styles.title}>Inventory Management System</h1>

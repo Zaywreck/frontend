@@ -17,8 +17,6 @@ export const fetchWarehouse = async (code) => {
     }
 };
 
-
-
 export const addWarehouse = async (warehouse) => {
     try {
         const response = await axios.post(`${url}/warehouses/`, warehouse);
@@ -38,7 +36,6 @@ export const updateWarehouse = async (code, warehouse) => {
         throw error;
     }
 };
-
 
 export const deleteWarehouse = async (code) => {
     try {

@@ -21,6 +21,9 @@ const AdminDashboard = () => {
                 <Link href="/admin/inventory" className={styles.button}>
                     Manage Inventory
                 </Link>
+                <Link href="/admin/average-usage" className={styles.button}>
+                    Manage Average Usage
+                </Link>
             </div>
         </div>            
     );

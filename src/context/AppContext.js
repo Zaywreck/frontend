@@ -6,6 +6,7 @@ import { fetchProduct, createProduct, deleteProduct, updateProduct } from '@/ser
 import { fetchCity, createCity, deleteCity, updateCity } from '@/services/cityService';
 import { fetchRegion, createRegion, deleteRegion, updateRegion } from '@/services/regionService';
 import { addToInventory, deleteFromInventory, updateInInventory, uploadFile, fetchInventoryLine } from '@/services/inventoryService';
+import { fetchAverageUsage, addAverageUsage,deleteAverageUsage,updateAverageUsage } from '@/services/averageUsageService';
 import { constants } from './constants';
 
 const AppContext = createContext();
@@ -17,6 +18,7 @@ export const AppProvider = ({ children }) => {
     const [regions, setRegions] = useState([]);
     const [warehouseData, setWarehouseData] = useState({});
     const [inventory, setInventory] = useState([]);
+    const [averageUsage, setAverageUsage] = useState([]);
     const [totalCount, setTotalCount] = useState(0);
     const [loading, setLoading] = useState(true);
     const url = constants.url;
@@ -111,6 +113,18 @@ export const AppProvider = ({ children }) => {
             setLoading(false);
         }
     }, [url]);
+
+    const fetchAllAverageUsage = useCallback(async () => {
+        setLoading(true);
+        try {
+            const response = await axios.get(`${url}/average/`);
+            setAverageUsage(response.data);
+        } catch (error) {
+            console.error('Error fetching average usage:', error);
+        } finally {
+            setLoading(false);
+        }
+    }, [url]);
     
 
 
@@ -159,6 +173,14 @@ export const AppProvider = ({ children }) => {
         totalCount,
         setTotalCount,
         fetchInventoryLine,
+        // --------------
+        fetchAllAverageUsage,
+        fetchAverageUsage,
+        addAverageUsage,
+        deleteAverageUsage,
+        updateAverageUsage,
+        averageUsage,
+        setAverageUsage,
         loading
     };
 

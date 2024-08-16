@@ -14,7 +14,6 @@ const Table = ({ columns, data, actions }) => {
         setSortConfig({ key, direction });
     };
 
-    // Memoize the filtered and sorted data to avoid recalculating on every render
     const sortedAndFilteredData = useMemo(() => {
         let filteredData = data;
         
