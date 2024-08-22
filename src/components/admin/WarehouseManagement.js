@@ -5,11 +5,13 @@ import AppContext from '@/context/AppContext';
 import Table from '../utils/Table';
 import styles from '@/styles/componentStyles/WarehouseManagement.module.css';
 import WarehouseAdd from './utils/WarehouseAdd';
+import AuthContext from '@/context/AuthContext';
 
 const WarehouseManagement = () => {
     const router = useRouter();
     const { fetchWarehouseData, addWarehouse, deleteWarehouse, warehouses, loading } = useContext(AppContext);
     const [newWarehouse, setNewWarehouse] = useState({ warehouse_code: '', warehouse_name: '', city_code: '' });
+    const { user } = useContext(AuthContext);
 
     useEffect(() => {
         fetchWarehouseData();
@@ -22,7 +24,7 @@ const WarehouseManagement = () => {
             return;
         }
         try {
-            await addWarehouse(newWarehouse);
+            await addWarehouse(newWarehouse, user.id);
             await fetchWarehouseData();
             setNewWarehouse({ warehouse_code: '', warehouse_name: '', city_code: '' });
         } catch (error) {
@@ -35,7 +37,7 @@ const WarehouseManagement = () => {
         const confirmDelete = window.confirm('Are you sure you want to delete this warehouse?');
         if (confirmDelete) {
             try {
-                await deleteWarehouse(code);
+                await deleteWarehouse(code, user.id);
                 await fetchWarehouseData();
             } catch (error) {
                 console.error('Error deleting warehouse:', error);

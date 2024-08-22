@@ -1,22 +1,26 @@
-'use client'
 import React, { useContext, useState } from 'react';
 import styles from '@/styles/authStyles/Login.module.css';
 import { useRouter } from 'next/navigation';
 import AuthContext from '@/context/AuthContext';
+import { logAction } from '@/services/loggerService'; // Import the logging function
 
 function Login() {
     const router = useRouter();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
     const { login } = useContext(AuthContext);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await login(email, password);
+            await login(email, password).then((data) => {
+                logAction(data.id, 'login', `User ${data.username} logged in`);
+            });
             router.push('/');
         } catch (error) {
-            alert('Login failed');
+            console.error('Login failed:', error);
+            setErrorMessage('Login failed. Please check your email and password.');
         }
     };
 
@@ -46,6 +50,7 @@ function Login() {
                         required
                     />
                 </div>
+                {errorMessage && <p className={styles.errorMessage}>{errorMessage}</p>}
                 <button className={styles.loginButton} type="submit">Login</button>
             </form>
             <p>------</p>

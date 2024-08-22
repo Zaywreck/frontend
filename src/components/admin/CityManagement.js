@@ -1,14 +1,16 @@
 'use client'
 import AppContext from "@/context/AppContext";
 import { useContext, useEffect, useState } from "react";
-import {useRouter} from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import CityAdd from "./utils/CityAdd";
 import Table from "../utils/Table";
+import AuthContext from "@/context/AuthContext";
 
 function CityManagement() {
     const router = useRouter();
     const { cities, fetchCities, createCity, deleteCity, loading } = useContext(AppContext);
     const [newCity, setNewCity] = useState({ city_code: '', city_name: '', region_code: '' });
+    const { user } = useContext(AuthContext);
 
     const handleAddCity = async () => {
         if (loading) return;
@@ -17,7 +19,7 @@ function CityManagement() {
             return;
         }
         try {
-            await createCity(newCity);
+            await createCity(newCity, user.id);
             await fetchCities();
             setNewCity({ city_code: '', city_name: '', region_code: '' });
         } catch (error) {
@@ -30,7 +32,7 @@ function CityManagement() {
         const confirmDelete = window.confirm('Are you sure you want to delete this city?');
         if (confirmDelete) {
             try {
-                await deleteCity(code);
+                await deleteCity(code, user.id);
                 await fetchCities();
             } catch (error) {
                 console.error('Error deleting city:', error);

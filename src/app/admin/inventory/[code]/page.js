@@ -3,12 +3,14 @@ import React, { useContext, useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import AppContext from '@/context/AppContext';
 import styles from '@/styles/componentStyles/EditPage.module.css';
+import AuthContext from '@/context/AuthContext';
 
 function InventoryEditPage({ params }) {
     const router = useRouter();
     const inventoryCode = params.code;
-    const { fetchInventoryLine, updateInventory } = useContext(AppContext);
+    const { fetchInventoryLine, updateInInventory } = useContext(AppContext);
     const [inventory, setInventory] = useState(null);
+    const { user } = useContext(AuthContext);
 
     useEffect(() => {
         if (inventoryCode) {
@@ -23,7 +25,7 @@ function InventoryEditPage({ params }) {
     const handleSave = async () => {
         if (!inventory) return;
         try {
-            await updateInventory(inventory);
+            await updateInInventory(inventory, user.id);
             router.push('/admin/inventory');
         } catch (error) {
             console.error('Error updating inventory:', error);

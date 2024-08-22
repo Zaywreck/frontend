@@ -3,17 +3,19 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useRouter } from 'next/navigation';
 import AppContext from '@/context/AppContext';
 import styles from '@/styles/componentStyles/EditPage.module.css';
+import AuthContext from '@/context/AuthContext';
 
 export default function EditWarehousePage({ params }) {
     const router = useRouter();
     const code = params.code;
     const { fetchWarehouse, updateWarehouse, loading } = useContext(AppContext);
     const [warehouse, setWarehouse] = useState(null);
+    const { user } = useContext(AuthContext);
 
     useEffect(() => {
         if (code) {
             const fetchData = async () => {
-                const data = await fetchWarehouse(code);
+                const data = await fetchWarehouse(code, user.id);
                 setWarehouse(data);
             };
             fetchData();
@@ -23,7 +25,7 @@ export default function EditWarehousePage({ params }) {
     const handleSave = async () => {
         if (loading || !warehouse) return;
         try {
-            await updateWarehouse(warehouse.warehouse_code, warehouse);
+            await updateWarehouse(warehouse.warehouse_code, warehouse, user.id);
             router.push('/admin/warehouse');
         } catch (error) {
             console.error('Error updating warehouse:', error);

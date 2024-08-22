@@ -1,0 +1,66 @@
+.container {
+  padding: 1rem;
+  font-family: Arial, sans-serif;
+}
+
+.searchBar {
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+.box {
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  cursor: pointer;
+  position: relative;
+  transition: background-color 0.3s ease;
+}
+
+.box:hover {
+  background-color: #eee;
+}
+
+.dropdownContent {
+  display: none;
+  position: absolute;
+  top: 100%; /* Position dropdown content below the box */
+  left: 0;
+  width: 100%;
+  padding: 0.5rem;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 10; /* Ensure dropdown content appears above other content */
+}
+
+.show {
+  display: block;
+}
+
+.itemTitle {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.itemDetails {
+  color: #555;
+  margin: 1px;
+}
+
+.noAlerts {
+  font-size: 1.2rem;
+  color: #888;
+}

@@ -1,14 +1,15 @@
 'use client'
 import React, { useContext, useEffect, useState } from 'react';
 import AppContext from '@/context/AppContext';
+import AuthContext from '@/context/AuthContext'; // Import AuthContext
 import Table from '../utils/Table';
 import ProductAdd from './utils/ProductAdd';
 import { useRouter } from 'next/navigation';
 
-
 const ProductManagement = () => {
     const router = useRouter();
-    const { fetchProducts, loading, products, deleteProduct,createProduct } = useContext(AppContext);
+    const { fetchProducts, loading, products, deleteProduct, createProduct } = useContext(AppContext);
+    const { user } = useContext(AuthContext); // Get user from AuthContext
     const [newProduct, setNewProduct] = useState({ product_code: '', product_name: '', unit_price: '' });
 
     const handleAddProduct = async () => {
@@ -18,7 +19,7 @@ const ProductManagement = () => {
             return;
         }
         try {
-            await createProduct(newProduct);
+            await createProduct(newProduct, user.id); // Pass user to createProduct
             await fetchProducts();
             setNewProduct({ product_code: '', product_name: '', unit_price: '' });
         } catch (error) {
@@ -31,7 +32,7 @@ const ProductManagement = () => {
         const confirmDelete = window.confirm('Are you sure you want to delete this product?');
         if (confirmDelete) {
             try {
-                await deleteProduct(code);
+                await deleteProduct(code, user.id); // Pass user to deleteProduct
                 await fetchProducts();
             } catch (error) {
                 console.error('Error deleting product:', error);
@@ -40,11 +41,10 @@ const ProductManagement = () => {
     }
 
     useEffect(() => {
-        fetchProducts();
-    }, [fetchProducts]);
+        fetchProducts(user); // Pass user to fetchProducts
+    }, [fetchProducts, user]);
 
     if (loading) return <div>Loading...</div>;
-
 
     const columns = ['product_code', 'product_name', 'unit_price'];
 

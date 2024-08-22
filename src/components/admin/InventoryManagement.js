@@ -6,29 +6,22 @@ import Table from '../utils/Table';
 import InventoryAdd from './utils/InventoryAdd';
 import PageSelector from '../utils/PageSelector';
 import styles from '@/styles/componentStyles/InventoryManagement.module.css';
+import AuthContext from '@/context/AuthContext';
 
 function InventoryManagement() {
     const router = useRouter();
-    const { inventory, fetchAllInventory, loading, deleteFromInventory, addToInventory } = useContext(AppContext);
-    
+    const { inventory, fetchAllInventory, loading, deleteFromInventory, addToInventory, totalCount } = useContext(AppContext);
+    const { user } = useContext(AuthContext);
+
     // Pagination states
     const [currentPage, setCurrentPage] = useState(1);
     const [rowsPerPage, setRowsPerPage] = useState(50); // Minimum page size
-    const [totalPages, setTotalPages] = useState(1);
     const [searchQuery, setSearchQuery] = useState('');
 
     const [newItem, setNewItem] = useState({ inventory_code: '', product_code: '', warehouse_code: '', quantity: '' });
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const { data } = await fetchAllInventory(searchQuery, currentPage, rowsPerPage);
-                setTotalPages(Math.ceil(data.total_count / rowsPerPage)); // Adjusted to match total_count
-            } catch (error) {
-                console.error('Error fetching inventory:', error);
-            }
-        };
-        fetchData();
+        fetchAllInventory(searchQuery, currentPage, rowsPerPage);
     }, [currentPage, rowsPerPage, searchQuery, fetchAllInventory]);
 
     const handleAddItem = async () => {
@@ -38,7 +31,7 @@ function InventoryManagement() {
             return;
         }
         try {
-            await addToInventory(newItem);
+            await addToInventory(newItem, user.id);
             await fetchAllInventory(searchQuery, currentPage, rowsPerPage);
             setNewItem({ inventory_code: '', product_code: '', warehouse_code: '', quantity: '' });
         } catch (error) {
@@ -51,7 +44,7 @@ function InventoryManagement() {
         const confirmDelete = window.confirm('Are you sure you want to delete this entry?');
         if (confirmDelete) {
             try {
-                await deleteFromInventory(code);
+                await deleteFromInventory(code, user.id);
                 await fetchAllInventory(searchQuery, currentPage, rowsPerPage);
             } catch (error) {
                 console.error('Error deleting this entry: ', error);
@@ -60,19 +53,19 @@ function InventoryManagement() {
     }
 
     const handlePageChange = (page) => {
-        if (page > 0 && page <= totalPages) {
+        if (page > 0 && page <= Math.ceil(totalCount / rowsPerPage)) {
             setCurrentPage(page);
         }
     };
 
     const handleRowsPerPageChange = (event) => {
         setRowsPerPage(parseInt(event.target.value, 10));
-        setCurrentPage(1); // Reset to first page on page size change
+        setCurrentPage(1);
     };
 
     const handleSearchChange = (e) => {
         setSearchQuery(e.target.value);
-        setCurrentPage(1); // Reset to first page on search query change
+        setCurrentPage(1);
     };
 
     if (loading) return <div>Loading...</div>;
@@ -106,7 +99,7 @@ function InventoryManagement() {
             <Table columns={columns} data={inventory} actions={actions} />
             <PageSelector
                 currentPage={currentPage}
-                totalPages={totalPages}
+                totalPages={Math.ceil(totalCount / rowsPerPage)}
                 rowsPerPage={rowsPerPage}
                 handlePageChange={handlePageChange}
                 handleRowsPerPageChange={handleRowsPerPageChange}

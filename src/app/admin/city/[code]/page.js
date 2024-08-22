@@ -3,12 +3,14 @@ import React, { useContext, useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import AppContext from '@/context/AppContext';
 import styles from '@/styles/componentStyles/EditPage.module.css';
+import AuthContext from '@/context/AuthContext';
 
 function CityEditPage({ params }) {
     const router = useRouter();
     const cityCode = params.code;
     const { fetchCity, updateCity } = useContext(AppContext);
     const [city, setCity] = useState(null);
+    const { user } = useContext(AuthContext);
 
     useEffect(() => {
         if (cityCode) {
@@ -21,7 +23,7 @@ function CityEditPage({ params }) {
     const handleSave = async () => {
         if (!city) return;
         try {
-            await updateCity(city);
+            await updateCity(city, user.id);
             router.push('/admin/city');
         } catch (error) {
             console.error('Error updating city:', error);

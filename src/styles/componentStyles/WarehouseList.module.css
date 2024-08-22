@@ -1,38 +1,50 @@
 /* src/styles/componentStyles/WarehouseList.module.css */
 .warehouseList {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background-color: white;
-    border: 1px solid #ddd;
-    padding: 10px;
-    max-height: 400px;
-    overflow-y: auto;
-  }
-  
-  .warehouseList ul {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .warehouseList li {
-    cursor: pointer;
-    padding: 5px;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  .warehouseList li:hover {
-    background-color: #f0f0f0;
-  }
-  
-  /* src/styles/componentStyles/MapComponent.module.css */
-  .popup {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    background-color: white;
-    border: 1px solid #ddd;
-    padding: 10px;
-    max-width: 300px;
-  }
-  
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: white;
+  border: 1px solid #ddd;
+  padding: 10px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.warehouseList ul {
+  list-style: none;
+  padding: 0;
+}
+
+.warehouseList li {
+  cursor: pointer;
+  padding: 5px;
+  border-bottom: 1px solid #ddd;
+}
+
+.warehouseList li:hover {
+  background-color: #f0f0f0;
+}
+
+/* src/styles/componentStyles/MapComponent.module.css */
+.popup {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: white;
+  border: 1px solid #ddd;
+  padding: 10px;
+  max-width: 300px;
+}
+
+.criticalAlert {
+  color: red;
+  font-weight: bold;
+}
+
+.alert {
+  color: orange;
+}
+
+.criticalIcon {
+  background-image: url('https://cdn2.iconfinder.com/data/icons/location-pack-miano-io/24/location-marker-1-warning-512.png');
+}

@@ -4,12 +4,13 @@ import AppContext from '@/context/AppContext';
 import Table from '../utils/Table';
 import { useRouter } from 'next/navigation';
 import RegionAdd from './utils/RegionAdd';
-import { deleteProduct, fetchProducts } from '@/services/productService';
+import AuthContext from '@/context/AuthContext';
 
 function RegionManagement() {
     const router = useRouter();
     const { fetchRegions, loading, regions, deleteRegion, createRegion } = useContext(AppContext);
     const [newRegion, setNewRegion] = useState({ region_code: '', region_name: '' });
+    const { user } = useContext(AuthContext);
 
     const handleAddRegion = async () => {
         if (loading) return;
@@ -18,7 +19,7 @@ function RegionManagement() {
             return;
         }
         try {
-            await createRegion(newRegion);
+            await createRegion(newRegion, user.id);
             await fetchRegions();
             setNewRegion({ region_code: '', region_name: '' });
         } catch (error) {
@@ -31,8 +32,8 @@ function RegionManagement() {
         const confirmDelete = window.confirm('Are you sure you want to delete this region?');
         if (confirmDelete) {
             try {
-                await deleteProduct(code);
-                await fetchProducts();
+                await deleteRegion(code, user.id);
+                await fetchRegions();
             } catch (error) {
                 console.error('Error deleting region:', error);
             }

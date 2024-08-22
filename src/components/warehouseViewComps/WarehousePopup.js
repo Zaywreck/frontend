@@ -4,7 +4,7 @@ import AppContext from '@/context/AppContext';
 import { useContext, useEffect, useState } from 'react';
 
 function WarehousePopup({ warehouseCode }) {
-    const { warehouseData, fetchJoinedWarehouseData, loading } = useContext(AppContext);
+    const { warehouseData, fetchJoinedWarehouseData, loading, calculateRemainingMonths } = useContext(AppContext);
     const [localData, setLocalData] = useState([]);
 
     useEffect(() => {
@@ -13,7 +13,6 @@ function WarehousePopup({ warehouseCode }) {
         }
     }, [warehouseCode, fetchJoinedWarehouseData]);
 
-    // Sync localData with context warehouseData
     useEffect(() => {
         if (warehouseData && typeof warehouseData === 'object') {
             // Extract data for the specific warehouseCode
@@ -27,6 +26,7 @@ function WarehousePopup({ warehouseCode }) {
         'product_name',
         'warehouse_name',
         'quantity',
+        'average_consumption',
         'timestamp'
     ];
     const actions = [];
@@ -41,7 +41,12 @@ function WarehousePopup({ warehouseCode }) {
 
     return (
         <div>
-            <Table data={localData} columns={columns} actions={actions} />
+            <Table
+                data={localData}
+                columns={columns}
+                actions={actions}
+                calculateRemainingMonths={calculateRemainingMonths}
+            />
         </div>
     );
 }

@@ -1,34 +1,92 @@
+/* styles/admin.module.css */
 .dashboardContainer {
-    padding: 20px;
-    text-align: center;
-    min-height: 100vh;
-    background-color: #efeff0;
+  padding: 20px;
+  background-color: #f8f9fa;
+  min-height: 100vh;
 }
 
 .title {
-    font-size: 2rem;
-    margin-bottom: 20px;
-    color: black;
+  margin-bottom: 20px;
+  color: #333;
+  font-size: 2.5em;
+  text-align: center;
+  font-weight: bold;
 }
 
 .buttonGrid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
-    justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
 }
 
 .button {
-    display: block;
-    padding: 20px;
-    background-color: #4B49AC;
-    color: white;
-    text-decoration: none;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s ease;
+  padding: 15px;
+  background-color: #0070f3;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
 }
 
 .button:hover {
-    background-color: #005bb5;
+  background-color: #005bb5;
+}
+
+.visualizations {
+  margin-top: 30px;
+}
+
+.chartContainer {
+  display: flex;
+  gap: 25px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.adminTableContainer {
+  margin-top: 30px;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.tableHeader {
+  margin-bottom: 15px;
+  padding: 10px;
+  text-align: center;
+  font-size: 1.5em;
+  color: #ffffff;
+  background: linear-gradient(90deg, #0070f3 30%, #005bb5 70%);
+  border-radius: 5px;
+}
+
+.statsContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 25px;
+  margin-top: 30px;
+}
+
+.stat {
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.stat h3 {
+  margin-bottom: 10px;
+  font-size: 1.2em;
+  color: #333;
+}
+
+.stat p {
+  font-size: 2em;
+  color: #0070f3;
+  font-weight: bold;
 }

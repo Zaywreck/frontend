@@ -3,12 +3,14 @@ import AppContext from "@/context/AppContext";
 import { useRouter } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 import styles from "@/styles/componentStyles/EditPage.module.css";
+import AuthContext from "@/context/AuthContext";
 
 function EditAverageUsage({ params }) {
     const id = params.id;
     const router = useRouter();
     const { fetchAverageUsage, updateAverageUsage } = useContext(AppContext);
     const [newAverageUsage, setNewAverageUsage] = useState({ id: '', product_code: '', warehouse_code: '', average_usage: '' });
+    const { user } = useContext(AuthContext);
 
     useEffect(() => {
         if (id) {
@@ -21,7 +23,7 @@ function EditAverageUsage({ params }) {
     const handleSave = async () => {
         if (!newAverageUsage) return;
         try {
-            await updateAverageUsage(newAverageUsage);
+            await updateAverageUsage(newAverageUsage, user.id);
             router.push('/admin/average-usage');
         } catch (error) {
             console.error('Error updating average usage:', error);

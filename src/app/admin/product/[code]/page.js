@@ -2,26 +2,28 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import AppContext from '@/context/AppContext';
+import AuthContext from '@/context/AuthContext';
 import styles from '@/styles/componentStyles/EditPage.module.css';
 
 const EditProductPage = ({ params }) => {
     const router = useRouter();
     const productCode = params.code;
     const { fetchProduct, updateProduct } = useContext(AppContext);
+    const { user } = useContext(AuthContext);
     const [product, setProduct] = useState(null);
 
     useEffect(() => {
         if (productCode) {
-            fetchProduct(productCode).then(data => {
+            fetchProduct(productCode, user?.id).then(data => {
                 setProduct(data);
             });
         }
-    }, [productCode, fetchProduct]);
+    }, [productCode, fetchProduct, user]);
 
     const handleSave = async () => {
         if (!product) return;
         try {
-            await updateProduct(product);
+            await updateProduct(product, user?.id);
             router.push('/admin/product');
         } catch (error) {
             console.error('Error updating product:', error);

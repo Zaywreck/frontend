@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import styles from '@/styles/componentStyles/Table.module.css';
 
-const Table = ({ columns, data, actions }) => {
+const Table = ({ columns, data, actions, calculateRemainingMonths }) => {
     const [searchQuery, setSearchQuery] = useState('');
     const [sortConfig, setSortConfig] = useState({ key: null, direction: 'asc' });
 
@@ -16,7 +16,7 @@ const Table = ({ columns, data, actions }) => {
 
     const sortedAndFilteredData = useMemo(() => {
         let filteredData = data;
-        
+
         if (searchQuery) {
             filteredData = filteredData.filter(row =>
                 columns.some(col =>
@@ -25,12 +25,27 @@ const Table = ({ columns, data, actions }) => {
             );
         }
 
+        const getRemainingMonthsForRow = (row) => {
+            if (calculateRemainingMonths) {
+                return calculateRemainingMonths(row.quantity, row.average_consumption);
+            }
+            return 'N/A';
+        };
+
         if (sortConfig.key) {
             filteredData.sort((a, b) => {
-                if (a[sortConfig.key] < b[sortConfig.key]) {
+                let aValue = a[sortConfig.key];
+                let bValue = b[sortConfig.key];
+
+                if (sortConfig.key === 'remaining_months') {
+                    aValue = getRemainingMonthsForRow(a);
+                    bValue = getRemainingMonthsForRow(b);
+                }
+
+                if (aValue < bValue) {
                     return sortConfig.direction === 'asc' ? -1 : 1;
                 }
-                if (a[sortConfig.key] > b[sortConfig.key]) {
+                if (aValue > bValue) {
                     return sortConfig.direction === 'asc' ? 1 : -1;
                 }
                 return 0;
@@ -38,7 +53,14 @@ const Table = ({ columns, data, actions }) => {
         }
 
         return filteredData;
-    }, [searchQuery, data, columns, sortConfig]);
+    }, [searchQuery, data, columns, sortConfig, calculateRemainingMonths]);
+
+    const columnsWithRemainingMonths = useMemo(() => {
+        if (!calculateRemainingMonths) {
+            return columns;
+        }
+        return [...columns, 'remaining_months'];
+    }, [columns, calculateRemainingMonths]);
 
     return (
         <div className={styles.tableContainer}>
@@ -52,7 +74,7 @@ const Table = ({ columns, data, actions }) => {
             <table className={styles.genericTableTable}>
                 <thead>
                     <tr>
-                        {columns.map((col, index) => (
+                        {columnsWithRemainingMonths.map((col, index) => (
                             <th
                                 key={index}
                                 onClick={() => handleSort(col)}
@@ -72,9 +94,19 @@ const Table = ({ columns, data, actions }) => {
                 <tbody>
                     {sortedAndFilteredData.map((row, rowIndex) => (
                         <tr key={rowIndex}>
-                            {columns.map((col, colIndex) => (
-                                <td key={colIndex} className={styles.cellTable}>
-                                    {row[col]}
+                            {columnsWithRemainingMonths.map((col, colIndex) => (
+                                <td
+                                    key={colIndex}
+                                    className={`${styles.cellTable} ${col === 'remaining_months' && calculateRemainingMonths
+                                        ? getRemainingMonthsStyle(calculateRemainingMonths(row.quantity, row.average_consumption))
+                                        : ''
+                                        }`}
+                                >
+                                    {col === 'remaining_months' && calculateRemainingMonths ? (
+                                        calculateRemainingMonths(row.quantity, row.average_consumption)
+                                    ) : (
+                                        row[col]
+                                    )}
                                 </td>
                             ))}
                             {actions.length > 0 && (
@@ -98,6 +130,16 @@ const Table = ({ columns, data, actions }) => {
     );
 };
 
+const getRemainingMonthsStyle = (remainingMonths) => {
+    if (remainingMonths === null) return '';
+    const months = Number(remainingMonths);
+    if (months <= 0) return styles.critical;
+    if (months <= 1) return styles.warning;
+    if (months <= 2) return styles.alert;
+    if (months <= 5) return styles.notice;
+    return '';
+};
+
 Table.propTypes = {
     columns: PropTypes.arrayOf(PropTypes.string).isRequired,
     data: PropTypes.arrayOf(PropTypes.object).isRequired,
@@ -106,7 +148,8 @@ Table.propTypes = {
             label: PropTypes.string.isRequired,
             handler: PropTypes.func.isRequired
         })
-    )
+    ),
+    calculateRemainingMonths: PropTypes.func
 };
 
 export default Table;

@@ -3,16 +3,18 @@ import React, { useContext, useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import AppContext from '@/context/AppContext';
 import styles from '@/styles/componentStyles/EditPage.module.css';
+import AuthContext from '@/context/AuthContext';
 
 function RegionEditPage({ params }) {
     const router = useRouter();
     const regionCode = params.code;
     const { fetchRegion, updateRegion } = useContext(AppContext);
+    const { user } = useContext(AuthContext);
     const [region, setRegion] = useState(null);
 
     useEffect(() => {
         if (regionCode) {
-            fetchRegion(regionCode).then(data => {
+            fetchRegion(regionCode, user.id).then(data => {
                 setRegion(data);
             });
         }
@@ -21,7 +23,7 @@ function RegionEditPage({ params }) {
     const handleSave = async () => {
         if (!region) return;
         try {
-            await updateRegion(region);
+            await updateRegion(region, user.id);
             router.push('/admin/region');
         } catch (error) {
             console.error('Error updating region:', error);

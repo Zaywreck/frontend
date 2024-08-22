@@ -33,7 +33,6 @@ function Page() {
             ) : (
                 <div>
                     <p>You are not logged in. Please sign in to use this feature.</p>
-                    <SignUp />
                     <Login />
                 </div>
             )}

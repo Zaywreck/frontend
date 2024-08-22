@@ -1,7 +1,11 @@
 /* styles/componentStyles/Table.module.css */
 .tableContainer {
     position: relative;
+    margin: auto;
     width: 100%;
+    max-height: 400px;
+    overflow-y: scroll;
+    min-height: min-content;
 }
 
 .searchBarTable {
@@ -14,14 +18,18 @@
 .genericTableTable {
     width: 100%;
     border-collapse: collapse;
-    margin: 0; /* Remove margin */
-    font-size: 16px; /* Reduce font size if needed */
-    min-width: 300px; /* Adjust min-width */
+    margin: 0;
+    /* Remove margin */
+    font-size: 16px;
+    /* Reduce font size if needed */
+    min-width: 300px;
+    /* Adjust min-width */
 }
 
 .genericTableTable th,
 .genericTableTable td {
-    padding: 8px 10px; /* Reduce padding */
+    padding: 8px 10px;
+    /* Reduce padding */
     border: 1px solid #ddd;
     text-align: left;
 }
@@ -44,7 +52,8 @@
 
 .actionButtonTable {
     margin-right: 5px;
-    padding: 5px 8px; /* Reduce padding */
+    padding: 5px 8px;
+    /* Reduce padding */
     border: none;
     border-radius: 4px;
     color: #fff;
@@ -69,4 +78,20 @@
 
 .cellTable {
     color: #000000;
+}
+
+.cellTable.critical {
+    background-color: #ffcccc;
+}
+
+.cellTable.warning {
+    background-color: #ff9999;
+}
+
+.cellTable.alert {
+    background-color: #ffcccc;
+}
+
+.cellTable.notice {
+    background-color: #e9ff99;
 }

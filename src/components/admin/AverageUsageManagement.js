@@ -4,22 +4,24 @@ import AverageUsageAdd from "./utils/AverageUsageAdd";
 import { useContext, useEffect, useState } from "react";
 import AppContext from "@/context/AppContext";
 import Table from "../utils/Table";
+import AuthContext from "@/context/AuthContext";
 
 function AverageUsageManagement() {
     const router = useRouter();
     const { averageUsage, fetchAverageUsage, fetchAllAverageUsage, loading, deleteAverageUsage, addAverageUsage } = useContext(AppContext);
-    const [newAverageUsage, setNewAverageUsage] = useState({ id: '', product_code: '', warehouse_code: '', average_usage: '' });
+    const [newAverageUsage, setNewAverageUsage] = useState({ product_code : '', average_usage: '', timestamp: '' });
+    const { user } = useContext(AuthContext);
 
     const handleAddAverageUsage = async () => {
         if (loading) return;
-        if (!newAverageUsage.id || !newAverageUsage.product_code || !newAverageUsage.warehouse_code || !newAverageUsage.average_usage) {
+        if (!newAverageUsage.product_code || !newAverageUsage.average_usage || !newAverageUsage.timestamp) {
             alert('Please fill out all fields');
             return;
         }
         try {
-            await addAverageUsage(newAverageUsage);
+            await addAverageUsage(newAverageUsage, user.id);
             await fetchAverageUsage();
-            setNewAverageUsage({ id: '', product_code: '', warehouse_code: '', average_usage: '' });
+            setNewAverageUsage({ product_code: '', average_usage: '', timestamp: 0 });
         } catch (error) {
             console.error('Error adding average usage:', error);
         }
@@ -30,7 +32,7 @@ function AverageUsageManagement() {
         const confirmDelete = window.confirm('Are you sure you want to delete this average usage?');
         if (confirmDelete) {
             try {
-                await deleteAverageUsage(id);
+                await deleteAverageUsage(id, user.id);
                 await fetchAverageUsage();
             } catch (error) {
                 console.error('Error deleting average usage:', error);

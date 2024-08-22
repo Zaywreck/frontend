@@ -6,18 +6,25 @@ import PieChartComponent from '../utils/PieChart';
 import Table from '../utils/Table';
 
 const WarehouseOverview = () => {
-    const { warehouseData, fetchJoinedWarehouseData, loading } = useContext(AppContext);
+    const { warehouseData, fetchJoinedWarehouseData, loading, calculateRemainingMonths, fetchWarehouse } = useContext(AppContext);
     const [selectedWarehouse, setSelectedWarehouse] = useState('34YB');
+    const [warehouse, setWarehouse] = useState({warehouse_name: '34YB'});
 
     useEffect(() => {
         if (selectedWarehouse) {
             fetchJoinedWarehouseData(selectedWarehouse);
-            console.log(warehouseData);
         }
     }, [selectedWarehouse, fetchJoinedWarehouseData]);
 
-    const handleWarehouseSelect = (warehouseCode) => {
-        setSelectedWarehouse(warehouseCode);
+    const handleWarehouseSelect = async (warehouseCode) => {
+        try{
+            setSelectedWarehouse(warehouseCode);
+            await fetchWarehouse(warehouseCode).then((data) => {
+                setWarehouse(data);
+            });
+        } catch (error) {
+            console.error('Error fetching warehouse:', error);
+        }
     };
 
     if (loading) {
@@ -25,13 +32,11 @@ const WarehouseOverview = () => {
     }
 
     const data = warehouseData[selectedWarehouse] || [];
-    console.log(data);
     const columns = [
-        'inventory_code', 
+        'inventory_code',
         'product_name',
-        'warehouse_name',
         'quantity',
-        'average_consumption', 
+        'average_consumption',
         'timestamp'
     ];
 
@@ -40,13 +45,14 @@ const WarehouseOverview = () => {
             <WarehouseSelector onSelect={handleWarehouseSelect} selectedWarehouse={selectedWarehouse} />
             {selectedWarehouse && (
                 <>
-                    <h1>Selected Warehouse: {selectedWarehouse}</h1>
+                    <h1>Selected Warehouse: {warehouse.warehouse_name}</h1>
                     <div className={styles.overviewContent}>
                         <div className={styles.tableSection}>
                             <Table
-                                columns={columns}
                                 data={data}
+                                columns={columns}
                                 actions={[]}
+                                calculateRemainingMonths={calculateRemainingMonths}
                             />
                         </div>
                         <div className={styles.chartSection}>

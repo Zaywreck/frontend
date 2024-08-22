@@ -1,0 +1,18 @@
+.chartContainer {
+    width: 90%;
+    height: 100%;
+    display: flex; /* Use flexbox to position the button next to the chart */
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+}
+
+.resetZoomButton {
+    padding: 10px;
+    background-color: rgb(0, 112, 243);
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-left: 20px; /* Add margin to create space between the chart and the button */
+}

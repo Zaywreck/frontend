@@ -48,6 +48,7 @@ export default function Header() {
                   <div className={styles.dropdownMenu}>
                     <Link href="/admin" className={styles.dropdownItem} onClick={handleClick}>Admin Panel</Link>
                     <Link href="/services/upload" className={styles.dropdownItem} onClick={handleClick}>Upload Data</Link>
+                    <Link href="/alert" className={styles.dropdownItem} onClick={handleClick}>Alerts</Link>
                   </div>
                 )}
               </div>

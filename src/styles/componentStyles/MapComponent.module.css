@@ -1,5 +1,4 @@
-/* MapComponent.module.css */
-
+/* src/styles/componentStyles/MapComponent.module.css */
 .container {
   display: flex;
 }
@@ -28,6 +27,11 @@
   margin-top: 0;
 }
 
+.warehouseList {
+  list-style: none;
+  padding: 0;
+}
+
 .warehouseItem {
   cursor: pointer;
   padding: 5px;
@@ -36,4 +40,13 @@
 
 .warehouseItem:hover {
   background-color: #f0f0f0;
+}
+
+.criticalAlert {
+  color: red;
+  font-weight: bold;
+}
+
+.alert {
+  color: orange;
 }
